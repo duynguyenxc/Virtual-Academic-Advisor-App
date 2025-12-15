@@ -9,6 +9,7 @@ python-multipart
 python-jose[cryptography]
 passlib[bcrypt]
 httpx
+pdfplumber
 # AI / RAG Dependencies
 langchain
 langchain-community

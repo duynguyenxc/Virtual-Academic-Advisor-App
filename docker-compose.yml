@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  # Database Service (PostgreSQL + pgvector)
+  db:
+    image: ankane/pgvector:latest # Specialized image with vector extension pre-installed
+    container_name: olemiss_advisor_db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123 # In production, use .env file
+      POSTGRES_DB: olemiss_advisor
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Backend Service (FastAPI) - Will be built from ./backend
+  backend:
+    build: ./backend
+    container_name: olemiss_advisor_backend
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://admin:password123@db:5432/olemiss_advisor
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:

@@ -1,0 +1,19 @@
+# Environment variables
+.env
+debug_env.py
+write_env_utf8.py
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+
+# Docker
+postgres_data/
+
+# OS
+.DS_Store
+Thumbs.db
